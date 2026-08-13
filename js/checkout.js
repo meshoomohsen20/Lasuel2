@@ -112,14 +112,11 @@ async function handleCheckoutSubmit(e) {
 
   trackEvent('Purchase', { value: order.total, currency: 'EGP' });
 
-  // 2) يحفظ تفاصيل آخر أوردر عشان صفحة النجاح تعرضها، ويفضّل رسالة واتساب كـ backup
+  // يحفظ تفاصيل آخر أوردر عشان صفحة النجاح تعرضها (للتقييمات)
   sessionStorage.setItem('laseul_last_order', JSON.stringify(order));
   sessionStorage.setItem('laseul_last_order_items', JSON.stringify(
     cart.map(i => ({ id: i.id, name: i.name, image: i.image }))
   ));
-
-  const msg = `طلب جديد من Laseul%0A%0Aالاسم: ${order.name}%0Aالموبايل: ${order.phone}%0Aالمحافظة: ${order.city} - ${order.area}%0Aالعنوان: ${order.address}%0A%0Aالمنتجات:%0A${encodeURIComponent(order.items)}%0A%0Aالإجمالي: ${order.total} ${CONFIG.currency}%0Aملاحظات: ${order.notes || '-'}`;
-  window.open(`https://wa.me/${CONFIG.whatsappNumber}?text=${msg}`, '_blank');
 
   cart = [];
   saveCart();
