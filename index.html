@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Laseul | متجر ملابس حريمي</title>
+<meta name="description" content="Laseul — تشكيلة ملابس حريمي أنيقة، دفع عند الاستلام، توصيل لكل المحافظات.">
+<link rel="stylesheet" href="/css/styles.css">
+
+<!-- ============ أماكن البيكسلات — تتفعّل تلقائيًا من config.js لو حطيت الـ IDs ============ -->
+</head>
+<body data-floating-cart="true">
+
+<div class="announce">توصيل لكل محافظات مصر 🚚 · الدفع عند الاستلام · اطلبي دلوقتي</div>
+
+<!-- ============ Header ============ -->
+<header class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="icon-btn" aria-label="القائمة" style="font-size:20px;">☰</a>
+    <a href="index.html" class="wordmark">Laseul</a>
+    <div class="header-actions">
+      <a href="cart.html" class="icon-btn" aria-label="السلة">
+        🛍️
+        <span class="cart-count" id="cartCount" style="display:none;">0</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ Hero ============ -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <span class="eyebrow">تشكيلة جديدة</span>
+    <h1 class="hero-title">أناقتك<br>لها عنوان</h1>
+    <p class="hero-sub">قطع مختارة بعناية تجمع بين الراحة والرقي، من أول الصبح لآخر الليل.</p>
+    <a href="products.html" class="btn btn-primary">تسوقي التشكيلة</a>
+  </div>
+</section>
+
+<!-- ============ Value strip ============ -->
+<div class="value-strip">
+  <div class="value-item"><span>COD</span>الدفع عند الاستلام</div>
+  <div class="value-item"><span>2-4</span>أيام توصيل</div>
+  <div class="value-item"><span>14</span>يوم استبدال</div>
+</div>
+
+<!-- ============ Category carousel ============ -->
+<section class="section" style="padding-bottom:20px;">
+  <div class="container">
+    <div class="section-head">
+      <span class="eyebrow">Laseul Collection</span>
+      <h2 class="section-title">تسوقي حسب ذوقك</h2>
+    </div>
+  </div>
+  <div class="cat-carousel-wrap">
+    <button class="carousel-arrow prev" id="catCarouselPrev" aria-label="السابق">‹</button>
+    <div class="cat-carousel" id="catCarousel"></div>
+    <button class="carousel-arrow next" id="catCarouselNext" aria-label="التالي">›</button>
+  </div>
+</section>
+
+<!-- ============ Trust strip ============ -->
+<div class="trust-strip">
+  <div class="trust-item">
+    <span class="trust-icon">🛡️</span>
+    <div>
+      <div class="trust-title">أصالة 100%</div>
+      <div class="trust-sub">قطع أصلية مضمونة</div>
+    </div>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">🚚</span>
+    <div>
+      <div class="trust-title">توصيل لكل مصر</div>
+      <div class="trust-sub">يوصل لباب بيتك</div>
+    </div>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">↩️</span>
+    <div>
+      <div class="trust-title">استبدال سهل</div>
+      <div class="trust-sub">خلال 14 يوم من الاستلام</div>
+    </div>
+  </div>
+  <div class="trust-item">
+    <span class="trust-icon">💬</span>
+    <div>
+      <div class="trust-title">خدمة عملاء</div>
+      <div class="trust-sub">دعم طول أيام الأسبوع</div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ New arrivals ============ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head" style="display:flex; align-items:flex-end; justify-content:space-between; text-align:right; margin-bottom:30px;">
+      <div>
+        <span class="eyebrow">اختيارات مميزة</span>
+        <h2 class="section-title" style="margin:0;">وصل حديثًا</h2>
+      </div>
+      <a href="products.html" class="view-all-link">عرض الكل ←</a>
+    </div>
+    <div class="product-grid" id="newArrivalsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-word">Laseul</div>
+        <p class="footer-sub">وجهتك للملابس الحريمي الأنيقة، بخامات مختارة وتصاميم بتفرق. دفع عند الاستلام وتوصيل لباب البيت.</p>
+      </div>
+      <div>
+        <div class="footer-heading">روابط</div>
+        <ul class="footer-links">
+          <li><a href="products.html">كل المنتجات</a></li>
+          <li><a href="#" onclick="openWhatsapp(); return false;">تواصلي معنا</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-heading">تواصل</div>
+        <ul class="footer-links">
+          <li id="footerWhatsapp">واتساب</li>
+          <li>الدفع عند الاستلام فقط</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">© Laseul — جميع الحقوق محفوظة</div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script src="/js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase-config.js"></script>
+<script src="/js/products-service.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/home.js"></script>
+</body>
+</html>

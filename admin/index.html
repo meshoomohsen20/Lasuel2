@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>لوحة التحكم | Laseul</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/css/styles.css">
+</head>
+<body class="admin-shell">
+
+<!-- ============ شاشة تسجيل الدخول ============ -->
+<div class="admin-login-wrap" id="loginScreen">
+  <div class="admin-login-card">
+    <span class="wordmark">Laseul</span>
+    <div class="admin-login-sub">لوحة تحكم المنتجات</div>
+    <form id="loginForm">
+      <div class="form-group">
+        <label class="form-label">البريد الإلكتروني</label>
+        <input class="form-input" type="email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">كلمة المرور</label>
+        <input class="form-input" type="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary btn-block">تسجيل الدخول</button>
+      <div class="admin-error" id="loginError" style="display:none;"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ لوحة التحكم (بعد تسجيل الدخول) ============ -->
+<div id="dashboardScreen" style="display:none;">
+  <header class="admin-header">
+    <span class="wordmark">Laseul · أدمن</span>
+    <div class="admin-header-actions">
+      <span id="adminEmail"></span>
+      <a href="#" id="logoutBtn" class="admin-logout">تسجيل الخروج</a>
+    </div>
+  </header>
+
+  <div class="admin-body">
+    <div class="admin-toolbar">
+      <h1>المنتجات</h1>
+      <button class="btn btn-primary" id="addProductBtn">+ إضافة منتج</button>
+    </div>
+
+    <div class="admin-table-wrap">
+      <div class="admin-row head">
+        <span>الصورة</span>
+        <span>الاسم</span>
+        <span>التصنيف</span>
+        <span>السعر</span>
+        <span>إجراءات</span>
+      </div>
+      <div id="adminProductsList"></div>
+    </div>
+    <nav class="pagination" id="adminPagination"></nav>
+
+    <div class="admin-toolbar" style="margin-top:56px;">
+      <h1>بيكسلات التتبع</h1>
+      <button class="btn btn-primary" id="addPixelBtn">+ إضافة بيكسل</button>
+    </div>
+    <p style="font-size:13px; color:var(--ink-soft); margin-top:-12px; margin-bottom:20px;">
+      أي بيكسل تضيفيه هنا بيشتغل على كل صفحات الموقع فورًا (بيتتبع PageView, ViewContent, AddToCart, Purchase).
+    </p>
+
+    <div class="admin-table-wrap">
+      <div class="admin-row-pixel head">
+        <span>المنصة</span>
+        <span>Pixel ID</span>
+        <span>ملاحظة</span>
+        <span>إجراء</span>
+      </div>
+      <div id="adminPixelsList"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ فورم إضافة/تعديل منتج ============ -->
+<div class="admin-modal-overlay" id="productModalOverlay" style="display:none;">
+  <div class="admin-modal">
+    <h3 id="productModalTitle">إضافة منتج</h3>
+    <form id="productForm">
+      <input type="hidden" name="mode" id="formMode" value="create">
+      <div class="form-group">
+        <label class="form-label">كود المنتج (فريد، بالإنجليزي، مثال: ls-007)</label>
+        <input class="form-input" name="id" id="fieldId" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">اسم المنتج</label>
+        <input class="form-input" name="name" required>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">التصنيف</label>
+          <input class="form-input" name="category" required placeholder="فساتين">
+        </div>
+        <div class="form-group">
+          <label class="form-label">السعر</label>
+          <input class="form-input" name="price" type="number" step="0.01" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">السعر قبل الخصم (اختياري)</label>
+        <input class="form-input" name="old_price" type="number" step="0.01">
+      </div>
+      <div class="form-group">
+        <label class="form-label">الألوان (افصل بفاصلة)</label>
+        <input class="form-input" name="colors" required placeholder="بيج, أسود, كحلي">
+      </div>
+      <div class="form-group">
+        <label class="form-label">المقاسات (افصل بفاصلة)</label>
+        <input class="form-input" name="sizes" required placeholder="S, M, L, XL">
+      </div>
+      <div class="form-group">
+        <label class="form-label">صورة الغلاف</label>
+        <input class="form-input" name="imageFile" id="coverImageInput" type="file" accept="image/*">
+        <div class="admin-hint">اختاري صورة من جهازك — هترفع تلقائي</div>
+        <div id="coverImagePreviewWrap" style="margin-top:10px; display:none;">
+          <img id="coverImagePreview" style="width:76px; height:96px; object-fit:cover; border-radius:4px;">
+        </div>
+        <input type="hidden" name="image" id="fieldImageUrl">
+      </div>
+      <div class="form-group">
+        <label class="form-label">صور إضافية (اختياري)</label>
+        <input class="form-input" name="extraImageFiles" id="extraImagesInput" type="file" accept="image/*" multiple>
+        <div class="admin-hint">تقدري تختاري أكتر من صورة مع بعض</div>
+        <div id="extraImagesPreviewWrap" style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;"></div>
+        <input type="hidden" name="images" id="fieldImagesUrls">
+      </div>
+      <div class="form-group">
+        <label class="form-label">الوصف</label>
+        <textarea class="form-textarea" name="description" rows="3"></textarea>
+      </div>
+      <div class="admin-modal-actions">
+        <button type="button" class="btn btn-outline" id="cancelFormBtn">إلغاء</button>
+        <button type="submit" class="btn btn-primary" id="saveProductBtn">حفظ</button>
+      </div>
+      <div class="admin-hint" id="uploadStatus" style="display:none;"></div>
+      <div class="admin-error" id="formError" style="display:none;"></div>
+    </form>
+
+    <div id="reviewsManagerWrap" style="display:none; margin-top:26px; padding-top:22px; border-top:1px solid var(--line);">
+      <h3 style="font-family:var(--font-display); font-style:italic; font-size:19px; margin-bottom:14px;">تقييمات المنتج</h3>
+      <div id="adminReviewsList" style="margin-bottom:16px;"></div>
+
+      <div style="background:var(--cream-deep); padding:16px; border-radius:var(--radius-sm);">
+        <label class="form-label">إضافة تقييم (بيظهر للزباين على طول)</label>
+        <div class="star-picker" id="adminStarPicker" data-rating="0" style="margin:8px 0 12px;">
+          <button type="button" data-star="5">★</button>
+          <button type="button" data-star="4">★</button>
+          <button type="button" data-star="3">★</button>
+          <button type="button" data-star="2">★</button>
+          <button type="button" data-star="1">★</button>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <input class="form-input" id="adminReviewName" placeholder="اسم العميلة">
+          </div>
+        </div>
+        <div class="form-group">
+          <textarea class="form-textarea" id="adminReviewComment" rows="2" placeholder="نص التقييم (اختياري)"></textarea>
+        </div>
+        <button type="button" class="btn btn-outline btn-block" id="adminAddReviewBtn">إضافة التقييم</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ============ فورم إضافة بيكسل ============ -->
+<div class="admin-modal-overlay" id="pixelModalOverlay" style="display:none;">
+  <div class="admin-modal">
+    <h3>إضافة بيكسل</h3>
+    <form id="pixelForm">
+      <div class="form-group">
+        <label class="form-label">المنصة</label>
+        <select class="form-select" name="platform" id="fieldPlatform" required>
+          <option value="meta">Meta (فيسبوك/انستجرام)</option>
+          <option value="tiktok">TikTok</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Pixel ID</label>
+        <input class="form-input" name="pixel_id" required placeholder="مثال: 1768834354525762">
+      </div>
+      <div class="form-group">
+        <label class="form-label">ملاحظة (اختياري)</label>
+        <input class="form-input" name="label" placeholder="مثال: بيكسل حساب العميل الرئيسي">
+      </div>
+      <div class="admin-modal-actions">
+        <button type="button" class="btn btn-outline" id="cancelPixelFormBtn">إلغاء</button>
+        <button type="submit" class="btn btn-primary" id="savePixelBtn">حفظ</button>
+      </div>
+      <div class="admin-error" id="pixelFormError" style="display:none;"></div>
+    </form>
+  </div>
+</div>
+
+<script src="/js/config.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/js/supabase-config.js"></script>
+<script src="/js/products-service.js"></script>
+<script src="/js/common.js"></script>
+<script src="/js/admin.js"></script>
+</body>
+</html>
