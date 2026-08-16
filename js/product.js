@@ -203,6 +203,14 @@ async function initProductPage() {
   renderBreadcrumb(p);
   renderPdp();
 
+  trackEvent('ViewContent', {
+    content_name: p.name,
+    content_ids: [p.id],
+    content_type: 'product',
+    value: p.price,
+    currency: 'EGP'
+  });
+
   pdpReviews = await fetchProductReviews(p.id);
   renderPdp(); // إعادة رسم عشان يظهر متوسط التقييم بعد ما يوصل
   renderReviewsSection();
